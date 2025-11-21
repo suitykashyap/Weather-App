@@ -5,17 +5,17 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding: 50px 20px; 
-    box-sizing: border-box; 
-}
+    padding: 50px 20px;
+    box-sizing: border-box;
+}	
 
 .container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%; 
-    max-width: 400px; 
+    width: 100%;
+    max-width: 400px;
     text-align: center;
     margin: 0 auto;
 }
@@ -27,18 +27,18 @@ h1 {
 }
 
 .search-box {
-    display: flex; 
+    display: flex;
     margin-bottom: 20px;
 }
 
 #city-input {
     padding: 10px;
-    flex-grow: 1; 
+    flex-grow: 1;
     margin-right: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    min-width: 50px; 
+    min-width: 50px;
 }
 
 #search-btn {
@@ -66,73 +66,67 @@ h1 {
     color: #007BFF;
     margin-bottom: 10px;
 }
-
 #temperature {
     font-size: 36px;
     color: #333;
     margin-bottom: 10px;
 }
-
 #description {
     font-size: 18px;
     color: #666;
     margin-bottom: 20px;
-    text-transform: capitalize; 
+    text-transform: capitalize;
 }
-
 #weather-icon {
     width: 50px;
     height: 50px;
     float: right; 
 }
+#humidity, #wind-speed {
+    font-size: 16px;
+    color: #555;
+}
 
 #forecast-section {
-    display: block;
+    display: none; 
     margin-top: 30px;
     text-align: left;
 }
-
 #forecast-section h2 {
     font-size: 20px;
     color: #333;
     margin-bottom: 15px;
     text-align: center;
 }
-
 #forecast-cards {
     display: flex;
     justify-content: space-between;
-    gap: 10px; 
+    gap: 10px;
 }
-
 .day-card {
     background-color: #f8f9fa;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    flex: 1; 
+    flex: 1;
     text-align: center;
 }
-
-.day-card h3 { 
+.day-card h3 {
     font-size: 14px;
     color: #007BFF;
     margin: 0 0 10px 0;
     font-weight: bold;
 }
-
 .day-card img {
     width: 50px;
     height: 50px;
 }
-
 .day-card .temp {
     font-size: 18px;
     font-weight: bold;
     color: #333;
     margin: 5px 0;
 }
-
 .day-card .desc {
     font-size: 12px;
     color: #666;
@@ -140,46 +134,91 @@ h1 {
     text-transform: capitalize;
 }
 
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.toggle-container span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 0 10px;
+}
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px; 
+    width: 24px;  
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    border: 1px solid #ccc; 
+}
+input:checked + .slider {
+    background-color: #007BFF;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
 @media (max-width: 600px) {
     .container {
         width: 100%;
         margin: 0;
         padding: 15px;
-        border-radius: 0; 
+        border-radius: 0;
     }
-
     body {
-        padding: 0; 
+        padding: 0;
     }
-
     .search-box {
-        flex-direction: column; 
+        flex-direction: column;
     }
-    
     #city-input {
         margin-right: 0;
         margin-bottom: 10px;
     }
-
     #search-btn {
         width: 100%;
     }
-    
     #weather-icon {
         float: none;
         display: block;
         margin: 0 auto 10px;
     }
-
     .weather-info, #forecast-section {
-        text-align: center; 
+        text-align: center;
     }
-    
     #forecast-cards {
         flex-direction: column;
     }
-
     .day-card {
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
     }
 }
