@@ -19,13 +19,22 @@
             </label>
             <span>°F</span>
         </div>
+
         <div class="search-box">
             <input type="text" id="city-input" placeholder="Enter city name">
             <button id="search-btn">Get Weather</button>
         </div>
 
+        <div class="favorites-container">
+            <h3>Favorites</h3>
+            <div id="favorites-list">
+                </div>
+        </div>
         <div class="weather-info" id="weather-display-area">
-            <h2 id="city-name">City Name</h2>
+            <div class="city-header">
+                <h2 id="city-name">City Name</h2>
+                <button id="add-favorite-btn" class="favorite-btn" title="Add to favorites">☆</button>
+            </div>
             <img id="weather-icon" src="" alt="Weather Icon">
             <p id="temperature">--°C</p>
             <p id="description">Weather Description</p>
@@ -36,28 +45,24 @@
         <div id="forecast-section">
             <h2>3-Day Weather Forecast</h2>
             <div id="forecast-cards">
-                
                 <div class="day-card">
                     <h3 id="day1-date">Day 1</h3>
-                    <img id="day1-icon" src="https.openweathermap.org/img/wn/10d.png" alt="Weather icon">
+                    <img id="day1-icon" src="https://openweathermap.org/img/wn/10d.png" alt="Weather icon">
                     <p id="day1-temp" class="temp">--°C</p>
                     <p id="day1-desc" class="desc">--</p>
                 </div>
-                
                 <div class="day-card">
                     <h3 id="day2-date">Day 2</h3>
-                    <img id="day2-icon" src="https.openweathermap.org/img/wn/10d.png" alt="Weather icon">
+                    <img id="day2-icon" src="https://openweathermap.org/img/wn/10d.png" alt="Weather icon">
                     <p id="day2-temp" class="temp">--°C</p>
                     <p id="day2-desc" class="desc">--</p>
                 </div>
-                
                 <div class="day-card">
                     <h3 id="day3-date">Day 3</h3>
-                    <img id="day3-icon" src="https.openweathermap.org/img/wn/10d.png" alt="Weather icon">
+                    <img id="day3-icon" src="https://openweathermap.org/img/wn/10d.png" alt="Weather icon">
                     <p id="day3-temp" class="temp">--°C</p>
                     <p id="day3-desc" class="desc">--</p>
                 </div>
-                
             </div>
         </div>
         </div><script src="js/app.js"></script>
