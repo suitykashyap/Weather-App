@@ -1,11 +1,11 @@
 document.getElementById('search-btn').addEventListener('click', function() {
     const city = document.getElementById('city-input').value;
-    	
+    
     if (city) {
         fetchWeatherData(city);
     } else {
         alert('Please enter a city name.');
-    }
+    }	
 });
 
 async function fetchWeatherData(city) {
@@ -44,8 +44,10 @@ async function fetchWeatherData(city) {
 
         displayArea.style.display = 'block';
 
-        const forecastData = generateWeatherForecast(city);
-        console.log('Simulated Forecast data:', forecastData);
+        const location = getUserLocation(); 
+        const forecastData = generateWeatherForecast(city, location.latitude, location.longitude);
+        
+        console.log('Simulated Forecast data (with simulated location):', forecastData); 
         updateForecastUI(forecastData);
 
     } catch (error) {
@@ -59,29 +61,37 @@ async function fetchWeatherData(city) {
         iconEl.style.display = 'none';
 
         displayArea.style.display = 'block';
-
         document.getElementById('forecast-section').style.display = 'none';
     }
 }
 
-function generateWeatherForecast(city) {
+function getUserLocation() {
+    return {
+        latitude: 40.7128,
+        longitude: -74.0060
+    };
+}
+
+function generateWeatherForecast(city, latitude, longitude) { 
     const weatherConditions = ["Sunny", "Cloudy", "Rainy", "Snowy"];
     const forecast = [];
     const currentDate = new Date();
 
     for (let i = 0; i < 3; i++) {
         currentDate.setDate(currentDate.getDate() + 1);
-
         const date = currentDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        const temperature = Math.random() * 45 - 10; 
+        
+        const temperature = Math.random() * 45 - 10;
         const condition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
-        const humidity = Math.random() * 100; 
+        const humidity = Math.random() * 100;
 
-        forecast.push({
+        forecast.push({ 
             date: date,
             temperature: temperature,
             condition: condition,
             humidity: humidity,
+            latitude: latitude,  
+            longitude: longitude  
         });
     }
     return forecast;
@@ -97,7 +107,8 @@ function updateForecastUI(forecastData) {
 
     for (let i = 0; i < 3; i++) {
         const dayData = forecastData[i];
-        const dayIndex = i + 1;
+        const dayIndex = i + 1; 
+
         document.getElementById(`day${dayIndex}-date`).textContent = dayData.date;
         document.getElementById(`day${dayIndex}-icon`).src = `https://openweathermap.org/img/wn/${iconMap[dayData.condition] || '01d'}.png`;
         document.getElementById(`day${dayIndex}-temp`).textContent = `${Math.round(dayData.temperature)}°C`;
