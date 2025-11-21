@@ -1,6 +1,6 @@
 document.getElementById('search-btn').addEventListener('click', function() {
     const city = document.getElementById('city-input').value;
-    	
+    
     if (city) {
         fetchRealWeatherData(city);
     } else {
@@ -41,18 +41,25 @@ async function fetchRealWeatherData(city) {
         iconEl.style.display = 'block'; 
         displayArea.style.display = 'block';
 
-        const location = getUserLocation();
-        const forecastData = fetchSimulatedWeatherData(location.latitude, location.longitude); 
-        
-        console.log('Simulated Forecast data (with simulated location):', forecastData); 
-        updateForecastUI(forecastData);
+        try {
+            const location = getUserLocation(); 
+            
+            const forecastData = generateWeatherForecast(data.name, location.latitude, location.longitude); 
+            
+            console.log('Simulated Forecast data (with simulated location):', forecastData); 
+            updateForecastUI(forecastData);
 
-    } catch (error) {
-        console.error('Error fetching real weather data:', error);
+        } catch (simulationError) {
+            console.error('Simulation Error:', simulationError.message);
+            document.getElementById('forecast-section').style.display = 'none';
+        }
+
+    } catch (apiError) {
+        console.error('Error fetching real weather data:', apiError.message);
         
         cityNameEl.textContent = 'Error';
         tempEl.textContent = '';
-        descEl.textContent = error.message;
+        descEl.textContent = apiError.message;
         humidityEl.textContent = 'Humidity: --%';
         windEl.textContent = 'Wind Speed: -- km/h';
         iconEl.style.display = 'none';
@@ -62,13 +69,23 @@ async function fetchRealWeatherData(city) {
 }
 
 function getUserLocation() {
+    const isLocationAvailable = Math.random() > 0.2; 
+    
+    if (!isLocationAvailable) {
+        throw new Error("Failed to detect location. Geolocation data is unavailable.");
+    }
+    
     return {
         latitude: 40.7128,
         longitude: -74.0060
     };
 }
 
-function fetchSimulatedWeatherData(latitude, longitude) {
+function generateWeatherForecast(city, latitude, longitude) {
+    if (typeof city !== 'string' || city.trim() === "") {
+        throw new Error("Invalid city name. Please provide a valid city.");
+    }
+
     const weatherConditions = ["Sunny", "Cloudy", "Rainy", "Snowy"];
     const forecast = [];
     const currentDate = new Date();
