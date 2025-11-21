@@ -30,7 +30,7 @@ async function fetchWeatherData(city) {
         }
 
         const data = await response.json();
-        console.log('Weather data:', data); 
+        console.log('Current Weather data:', data);
 
         cityNameEl.textContent = data.name;
         tempEl.textContent = `${Math.round(data.main.temp)}°C`;
@@ -40,9 +40,13 @@ async function fetchWeatherData(city) {
         
         iconEl.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
         iconEl.alt = data.weather[0].description;
-        iconEl.style.display = 'block';
+        iconEl.style.display = 'block'; 
 
         displayArea.style.display = 'block';
+
+        const forecastData = generateWeatherForecast(city);
+        console.log('Simulated Forecast data:', forecastData);
+        updateForecastUI(forecastData);
 
     } catch (error) {
         console.error('Error fetching weather data:', error);
@@ -52,8 +56,53 @@ async function fetchWeatherData(city) {
         descEl.textContent = error.message;
         humidityEl.textContent = 'Humidity: --%';
         windEl.textContent = 'Wind Speed: -- km/h';
-        iconEl.style.display = 'none'; 
+        iconEl.style.display = 'none';
 
-        displayArea.style.display = 'block'; 
+        displayArea.style.display = 'block';
+
+        document.getElementById('forecast-section').style.display = 'none';
     }
+}
+
+function generateWeatherForecast(city) {
+    const weatherConditions = ["Sunny", "Cloudy", "Rainy", "Snowy"];
+    const forecast = [];
+    const currentDate = new Date();
+
+    for (let i = 0; i < 3; i++) {
+        currentDate.setDate(currentDate.getDate() + 1);
+
+        const date = currentDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        const temperature = Math.random() * 45 - 10; 
+        const condition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+        const humidity = Math.random() * 100; 
+
+        forecast.push({
+            date: date,
+            temperature: temperature,
+            condition: condition,
+            humidity: humidity,
+        });
+    }
+    return forecast;
+}
+
+function updateForecastUI(forecastData) {
+    const iconMap = {
+        "Sunny": "01d",
+        "Cloudy": "03d",
+        "Rainy": "10d",
+        "Snowy": "13d"
+    };
+
+    for (let i = 0; i < 3; i++) {
+        const dayData = forecastData[i];
+        const dayIndex = i + 1;
+        document.getElementById(`day${dayIndex}-date`).textContent = dayData.date;
+        document.getElementById(`day${dayIndex}-icon`).src = `https://openweathermap.org/img/wn/${iconMap[dayData.condition] || '01d'}.png`;
+        document.getElementById(`day${dayIndex}-temp`).textContent = `${Math.round(dayData.temperature)}°C`;
+        document.getElementById(`day${dayIndex}-desc`).textContent = dayData.condition;
+    }
+
+    document.getElementById('forecast-section').style.display = 'block';
 }
