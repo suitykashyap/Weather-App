@@ -1,6 +1,6 @@
 document.getElementById('search-btn').addEventListener('click', function() {
     const city = document.getElementById('city-input').value;
-
+    
     if (city) {
         fetchWeatherData(city);
     } else {
@@ -9,23 +9,23 @@ document.getElementById('search-btn').addEventListener('click', function() {
 });
 
 async function fetchWeatherData(city) {
-    const apiKey = '13e1453a13aee34453910ccde1b67eee'; 
+    constapiKey = '13e1453a13aee34453910ccde1b67eee'; 
     
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    constapiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-    const displayArea = document.getElementById('weather-display-area');
-    const cityNameEl = document.getElementById('city-name');
-    const tempEl = document.getElementById('temperature');
-    const descEl = document.getElementById('description');
-    const iconEl = document.getElementById('weather-icon');
-    const humidityEl = document.getElementById('humidity');
-    const windEl = document.getElementById('wind-speed');
+    constdisplayArea = document.getElementById('weather-display-area');
+    constcityNameEl = document.getElementById('city-name');
+    consttempEl = document.getElementById('temperature');
+    constdescEl = document.getElementById('description');
+    consticonEl = document.getElementById('weather-icon');
+    consthumidityEl = document.getElementById('humidity');
+    constwindEl = document.getElementById('wind-speed');
 
     try {
         const response = await fetch(apiUrl);
 
         if (!response.ok) {
-            const errorData = await response.json();
+            consterrorData = await response.json();
             throw new Error(errorData.message || 'City not found');
         }
 
